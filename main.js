@@ -1518,37 +1518,53 @@ const search_1 = __webpack_require__(806);
 const airdcpp_extension_settings_1 = __importDefault(__webpack_require__(605));
 const CONFIG_VERSION = 1;
 exports["default"] = (socket, extension) => {
+    console.log('1. Extension module loaded');
     global.SOCKET = socket;
     global.DbPath = extension.configPath + 'db.json';
     extension.onStart = async () => {
-        await (0, localdb_1.getDb)(global.DbPath);
-        // INITIALIZATION
-        global.SETTINGS = (0, airdcpp_extension_settings_1.default)(socket, {
-            extensionName: extension.name,
-            configFile: extension.configPath + 'config.json',
-            configVersion: CONFIG_VERSION,
-            definitions: settings_1.SettingDefinitions,
-        });
-        await global.SETTINGS.load(settings_1.migrate);
-        // Set up search interval
-        (0, search_1.initializeSearchInterval)(global.SETTINGS.getValue('search_interval'));
-        global.SETTINGS.onValuesUpdated = async (updatedValues) => {
-            // Reset search interval if changed
-            if (Object.prototype.hasOwnProperty.call(updatedValues, 'search_interval')) {
-                clearInterval(global.SEARCH_INTERVAL);
-                (0, search_1.initializeSearchInterval)(updatedValues.search_interval);
-            }
-        };
-        // Perform an initial search on startup
-        setTimeout(() => {
-            (0, search_1.runSearch)();
-        }, 5000); // Wait 5 seconds after startup
+        console.log('2. Extension onStart called');
+        try {
+            await (0, localdb_1.getDb)(global.DbPath);
+            console.log('3. Database initialized');
+            // INITIALIZATION
+            global.SETTINGS = (0, airdcpp_extension_settings_1.default)(socket, {
+                extensionName: extension.name,
+                configFile: extension.configPath + 'config.json',
+                configVersion: CONFIG_VERSION,
+                definitions: settings_1.SettingDefinitions,
+            });
+            console.log('4. Settings manager created');
+            await global.SETTINGS.load(settings_1.migrate);
+            console.log('5. Settings loaded');
+            // Set up search interval
+            (0, search_1.initializeSearchInterval)(global.SETTINGS.getValue('search_interval'));
+            console.log('6. Search interval initialized');
+            global.SETTINGS.onValuesUpdated = async (updatedValues) => {
+                // Reset search interval if changed
+                if (Object.prototype.hasOwnProperty.call(updatedValues, 'search_interval')) {
+                    clearInterval(global.SEARCH_INTERVAL);
+                    (0, search_1.initializeSearchInterval)(updatedValues.search_interval);
+                }
+            };
+            // Perform an initial search on startup
+            setTimeout(() => {
+                (0, search_1.runSearch)();
+            }, 5000); // Wait 5 seconds after startup
+            console.log('7. Extension fully initialized');
+        }
+        catch (error) {
+            console.error('Extension initialization error:', error);
+            throw error;
+        }
     };
     extension.onStop = async () => {
+        console.log('Extension stopping...');
         clearInterval(global.SEARCH_INTERVAL);
         const db = await (0, localdb_1.getDb)(global.DbPath);
         await db.save();
+        console.log('Extension stopped');
     };
+    console.log('8. Extension handlers registered');
 };
 
 
