@@ -1,0 +1,86 @@
+{
+  "name": "airdcpp-nfo-keyword-searcher",
+  "version": "0.0.1",
+  "description": "Extension to search for directories containing NFO/TXT files with specific keywords and download them automatically.",
+  "license": "MIT",
+  "author": "jame25",
+  "keywords": [
+    "airdcpp",
+    "airdcpp-extensions",
+    "airdcpp-extensions-public",
+    "nfo",
+    "keyword-search"
+  ],
+  "homepage": "https://github.com/fugazi/airdcpp-nfo-keyword-searcher#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fugazi/airdcpp-nfo-keyword-searcher.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fugazi/airdcpp-nfo-keyword-searcher/issues"
+  },
+  "scripts": {
+    "build": "npm run lint && tsc && npm run clean && cross-env NODE_ENV=production webpack",
+    "clean": "rimraf dist",
+    "dev": "ts-node-dev --respawn --transpileOnly ./src/main.ts",
+    "start": "node devtools/watch.js ../dist/main.js",
+    "test": "nyc mocha --globals global -r ts-node/register src/tests/*.test.ts",
+    "posttest": "nyc report --reporter=json",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint .",
+    "webpack": "webpack",
+    "webpack:prod": "cross-env NODE_ENV=production webpack"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/plugin-transform-runtime": "^7.19.6",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.18.6",
+    "@babel/register": "^7.18.9",
+    "@babel/runtime": "^7.20.7",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.11.18",
+    "@types/sinon": "^10.0.13",
+    "@types/source-map-support": "^0.5.6",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "@typescript-eslint/parser": "^5.48.1",
+    "airdcpp-apisocket": "^2.4.4",
+    "airdcpp-extension": "^1.5.1",
+    "airdcpp-extension-settings": "^1.2.1",
+    "babel-loader": "^9.1.2",
+    "chai": "^4.3.7",
+    "core-js": "^3.27.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-jsdoc": "^39.6.4",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-react": "^7.31.11",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "rimraf": "^3.0.2",
+    "sinon": "^15.0.1",
+    "source-map-support": "^0.5.21",
+    "ts-loader": "^9.4.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "main": "main.js",
+  "files": [
+    "main.js",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "airdcpp": {
+    "apiVersion": 1,
+    "minApiFeatureLevel": 0,
+    "signalReady": false
+  },
+  "dependencies": {
+    "stormdb": "^0.5.2"
+  }
+}
