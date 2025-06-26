@@ -1,4 +1,4 @@
-# AirDC++ NFO Keyword Searcher
+# AirDC++ Keyword Downloader
 
 An extension for AirDC++ that searches for directories containing NFO/TXT files with specific keywords and automatically downloads them.
 
